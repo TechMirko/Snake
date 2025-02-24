@@ -2,9 +2,11 @@
 
 void print_livelli(plist m) {
     if (m != NULL) {
-        cout << "Livello " << m->l.numero << ", difficolta': " << m->l.difficolta << endl;
+        initscr();
+        printw("Livello %d, difficolta': %c\n", m->l.numero, m->l.difficolta);
+        refresh();
         print_livelli(m->next);
-    }
+    } else getch();
 }
 
 plist insert_livello(plist m, livello liv) {
