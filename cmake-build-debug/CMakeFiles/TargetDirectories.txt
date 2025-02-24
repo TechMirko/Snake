@@ -1,3 +1,3 @@
-C:/Users/mirko/CLionProjects/Snake/cmake-build-debug/CMakeFiles/Snake.dir
+C:/Users/mirko/CLionProjects/Snake/cmake-build-debug/CMakeFiles/Lezioni.dir
 C:/Users/mirko/CLionProjects/Snake/cmake-build-debug/CMakeFiles/edit_cache.dir
 C:/Users/mirko/CLionProjects/Snake/cmake-build-debug/CMakeFiles/rebuild_cache.dir

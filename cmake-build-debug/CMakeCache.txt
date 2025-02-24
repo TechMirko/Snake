@@ -119,7 +119,7 @@ CMAKE_INSTALL_PREFIX:PATH=C:/Program Files (x86)/Snake
 CMAKE_LINKER:FILEPATH=C:/MinGW/bin/ld.exe
 
 //make program
-CMAKE_MAKE_PROGRAM:FILEPATH=C:/PROGRA~1/JETBRA~1/CLION2~1.2/bin/ninja/win/x64/ninja.exe
+CMAKE_MAKE_PROGRAM:FILEPATH=C:/Program Files/JetBrains/CLion 2024.2.2/bin/ninja/win/x64/ninja.exe
 
 //Flags used by the linker during the creation of modules during
 // all build types.
@@ -254,11 +254,29 @@ CURSES_INCLUDE_PATH:PATH=CURSES_INCLUDE_PATH-NOTFOUND
 //Path to a library.
 CURSES_NCURSES_LIBRARY:FILEPATH=CURSES_NCURSES_LIBRARY-NOTFOUND
 
+//Value Computed by CMake
+Lezioni_BINARY_DIR:STATIC=C:/Users/mirko/CLionProjects/Snake/cmake-build-debug
+
+//Value Computed by CMake
+Lezioni_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+Lezioni_SOURCE_DIR:STATIC=C:/Users/mirko/CLionProjects/Snake
+
 //Arguments to supply to pkg-config
 PKG_CONFIG_ARGN:STRING=
 
 //pkg-config executable
 PKG_CONFIG_EXECUTABLE:FILEPATH=PKG_CONFIG_EXECUTABLE-NOTFOUND
+
+//Value Computed by CMake
+Project_BINARY_DIR:STATIC=C:/Users/mirko/CLionProjects/Snake/cmake-build-debug
+
+//Value Computed by CMake
+Project_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+Project_SOURCE_DIR:STATIC=C:/Users/mirko/CLionProjects/Snake
 
 //Value Computed by CMake
 Snake_BINARY_DIR:STATIC=C:/Users/mirko/CLionProjects/Snake/cmake-build-debug

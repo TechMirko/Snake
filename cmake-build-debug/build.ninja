@@ -41,37 +41,49 @@ include CMakeFiles/rules.ninja
 
 cmake_ninja_workdir = C$:/Users/mirko/CLionProjects/Snake/cmake-build-debug/
 # =============================================================================
-# Object build statements for EXECUTABLE target Snake
+# Object build statements for EXECUTABLE target Lezioni
 
 
 #############################################
-# Order-only phony target for Snake
+# Order-only phony target for Lezioni
 
-build cmake_object_order_depends_target_Snake: phony || .
+build cmake_object_order_depends_target_Lezioni: phony || .
 
-build CMakeFiles/Snake.dir/main.cpp.obj: CXX_COMPILER__Snake_unscanned_Debug C$:/Users/mirko/CLionProjects/Snake/main.cpp || cmake_object_order_depends_target_Snake
-  DEP_FILE = CMakeFiles\Snake.dir\main.cpp.obj.d
+build CMakeFiles/Lezioni.dir/main.cpp.obj: CXX_COMPILER__Lezioni_unscanned_Debug C$:/Users/mirko/CLionProjects/Snake/main.cpp || cmake_object_order_depends_target_Lezioni
+  DEP_FILE = CMakeFiles\Lezioni.dir\main.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  OBJECT_DIR = CMakeFiles\Snake.dir
-  OBJECT_FILE_DIR = CMakeFiles\Snake.dir
+  OBJECT_DIR = CMakeFiles\Lezioni.dir
+  OBJECT_FILE_DIR = CMakeFiles\Lezioni.dir
+
+build CMakeFiles/Lezioni.dir/test.cpp.obj: CXX_COMPILER__Lezioni_unscanned_Debug C$:/Users/mirko/CLionProjects/Snake/test.cpp || cmake_object_order_depends_target_Lezioni
+  DEP_FILE = CMakeFiles\Lezioni.dir\test.cpp.obj.d
+  FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\Lezioni.dir
+  OBJECT_FILE_DIR = CMakeFiles\Lezioni.dir
+
+build CMakeFiles/Lezioni.dir/menu_livelli.cpp.obj: CXX_COMPILER__Lezioni_unscanned_Debug C$:/Users/mirko/CLionProjects/Snake/menu_livelli.cpp || cmake_object_order_depends_target_Lezioni
+  DEP_FILE = CMakeFiles\Lezioni.dir\menu_livelli.cpp.obj.d
+  FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\Lezioni.dir
+  OBJECT_FILE_DIR = CMakeFiles\Lezioni.dir
 
 
 # =============================================================================
-# Link build statements for EXECUTABLE target Snake
+# Link build statements for EXECUTABLE target Lezioni
 
 
 #############################################
-# Link the executable Snake.exe
+# Link the executable Lezioni.exe
 
-build Snake.exe: CXX_EXECUTABLE_LINKER__Snake_Debug CMakeFiles/Snake.dir/main.cpp.obj
+build Lezioni.exe: CXX_EXECUTABLE_LINKER__Lezioni_Debug CMakeFiles/Lezioni.dir/main.cpp.obj CMakeFiles/Lezioni.dir/test.cpp.obj CMakeFiles/Lezioni.dir/menu_livelli.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
-  OBJECT_DIR = CMakeFiles\Snake.dir
+  OBJECT_DIR = CMakeFiles\Lezioni.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_FILE = Snake.exe
-  TARGET_IMPLIB = libSnake.dll.a
-  TARGET_PDB = Snake.exe.dbg
+  TARGET_FILE = Lezioni.exe
+  TARGET_IMPLIB = libLezioni.dll.a
+  TARGET_PDB = Lezioni.exe.dbg
 
 
 #############################################
@@ -99,7 +111,7 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 # =============================================================================
 # Target aliases.
 
-build Snake: phony Snake.exe
+build Lezioni: phony Lezioni.exe
 
 # =============================================================================
 # Folder targets.
@@ -109,7 +121,7 @@ build Snake: phony Snake.exe
 #############################################
 # Folder: C:/Users/mirko/CLionProjects/Snake/cmake-build-debug
 
-build all: phony Snake.exe
+build all: phony Lezioni.exe
 
 # =============================================================================
 # Built-in targets
