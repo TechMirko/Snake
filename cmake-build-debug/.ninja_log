@@ -1,3 +1,7 @@
 # ninja log v6
-64	2548	7620947452860747	CMakeFiles/Snake.dir/main.cpp.obj	ad8b198806fcb482
-1	260	7621223234861088	build.ninja	91c6aef9e2ef045
+2	255	7624837120161430	build.ninja	d8925adb195f80d8
+24	163	7624834672661650	CMakeFiles/snake.dir/menu_livelli.cpp.obj	fd457aa20fa3db11
+22	362	7624834672641599	CMakeFiles/snake.dir/main.cpp.obj	40dc6c332b96b716
+224	341	7624382386765539	snake.exe	22ba8fa1d88dbe35
+28	346	7624834672711599	CMakeFiles/snake.dir/file_test.cpp.obj	ff24b8c487a65964
+26	364	7624834672681606	CMakeFiles/snake.dir/menu.cpp.obj	c13b5c816bdf31f5
