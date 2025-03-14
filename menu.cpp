@@ -1,3 +1,4 @@
+// TODO: endgame menu
 #include "menu.h"
 #include <fstream>
 #include <cstring>
@@ -5,6 +6,12 @@
 plist lista_livelli = NULL;
 
 /* ----- IMPLEMENTAZIONE FUNZIONI LISTA BIDIREZIONALE ----- */
+
+/**
+ * @param bilista lista bidirezionale dei livelli
+ * @param l livello da aggiungere
+ * @return lista aggiornata
+ */
 plist ordered_insert(plist bilista, const Livello l) {
     // Caso base: lista vuota, crea il primo nodo
     if (bilista == NULL) {
@@ -35,6 +42,10 @@ plist ordered_insert(plist bilista, const Livello l) {
     return new_element; // Nuovo nodo diventa la nuova testa della lista
 }
 
+/**
+ * @param bilista lista bidirezionale dei livelli
+ * @return lista aggiornata completa dei livelli
+ */
 plist crea_blista(plist bilista) {
     const int livelli[5] = {1, 2, 3, 4, 5};
     for (int i = 0; i < 5; i++) {
@@ -45,6 +56,11 @@ plist crea_blista(plist bilista) {
 }
 
 /* ----- IMPLEMENTAZIONE FUNZIONI AUSILIARIE ----- */
+
+/**
+ * @param win finestra di gioco con parametri sempre uguali
+ * @param file_name nome del file da cui deve andare a leggere la classifica
+ */
 void print_from_file(WINDOW* win, char file_name[]) {
     initscr();
     noecho();
@@ -71,6 +87,11 @@ void print_from_file(WINDOW* win, char file_name[]) {
     file.close();
 }
 
+/**
+ * @param win finestra di gioco con parametri sempre uguali
+ * @param list lista con i livelli da selezionare
+ * @param rows numero di righe da stampare (serve per le dimensione della box)
+ */
 void print_from_list(WINDOW* win, plist list, const int rows) {
     plist tmp = list;
     int levels[rows], counter = 0;
@@ -103,6 +124,11 @@ void print_from_list(WINDOW* win, plist list, const int rows) {
 }
 
 /* ----- IMPLEMENTAZIONE CLASSE ----- */
+
+/**
+ * @param v array delle voci del menu
+ * @param n_voci numero delle voci presenti nel menu
+ */
 Menu::Menu(const char* v[], int n_voci) {
     lista_livelli = crea_blista(lista_livelli);
     for (int i = 0; i < n_voci; i++) {
@@ -111,13 +137,91 @@ Menu::Menu(const char* v[], int n_voci) {
     }
 }
 
+/**
+ * @param level array nel quale si vuole copiare il NOME del livello
+ * @param index indice dell'array da cui proviene
+ */
 void Menu::get_voce(char level[], const int index) {
     strcpy(level, voci[index]);
 }
 
+/**
+ * @param win finestra di gioco con parametri sempre uguali
+ */
 void Menu::scelta_classifica(WINDOW* win) {
-    char nome_file[40] = "test.txt";
+    char nome_file[40] = "classifica.txt";
     print_from_file(win, nome_file);
+}
+
+/**
+ * @param lista lista alla quale aggiungere un elemento
+ * @param punteggio totale del punteggio realizzato
+ * @return lista aggiornata in modo ordinato
+ */
+clist ordered_insert(clist lista, int punteggio) {
+    if (lista == NULL) {
+        clist n = new ClassificaNode;
+        n->punteggio = punteggio;
+        n->next = NULL;
+        return n;
+    }
+
+    // Correzione: Se il nuovo punteggio è maggiore, lo inserisco prima
+    if (punteggio > lista->punteggio) {
+        clist new_element = new ClassificaNode;
+        new_element->punteggio = punteggio;
+        new_element->next = lista;
+        return new_element;  // Il nuovo elemento diventa la nuova testa
+    }
+
+    // Se il nuovo punteggio è minore, proseguo ricorsivamente
+    lista->next = ordered_insert(lista->next, punteggio);
+    return lista;
+}
+
+/**
+ * @param nome_file nome del file della classifica
+ * @param lista lista nella quale vogliamo mettere i livelli
+ * @return lista aggiornata (completa)
+ */
+clist crea_lista(char nome_file[], clist lista) {
+    // creo una lista di appoggio per inserire correttamente il nuovo punteggio
+    // leggendo prima i punteggi precedenti salvati nel file
+    ifstream file_classifica(nome_file);
+    if (!file_classifica) {
+        cerr << "Errore: impossibile aprire il file " << nome_file << endl;
+        return lista; // Ritorna la lista vuota se il file non esiste
+    }
+
+    // riscrivo il file con la lista dei punteggi aggiornata ed ordinata
+    int punto;
+    while (file_classifica >> punto) {
+        lista = ordered_insert(lista, punto);
+    }
+    file_classifica.close();
+    return lista;
+}
+
+/**
+ * @param punteggio punteggio totalizzato durante la paratita
+ */
+void Menu::update_file(const int punteggio) {
+    // lettura del file ed inserimento dei livelli all'interno di una lista
+    char nome_file[50] = "classifica.txt";
+    clist lista = crea_lista(nome_file, NULL);
+    lista = ordered_insert(lista, punteggio);
+
+    // riscrittura del file
+    ofstream file(nome_file, ios::trunc); // Svuota e riscrive
+    if (!file) {
+        cerr << "Errore: impossibile aprire il file!" << endl;
+        return;
+    }
+    while (lista != NULL) {
+        file << lista->punteggio << endl;
+        lista = lista->next;
+    }
+    file.close();
 }
 
 void Menu::scelta_partita() {
@@ -144,9 +248,16 @@ void Menu::prova_per_livello(const int livello) {
     refresh();
     wrefresh(menu);
     getch();
+    // aggiorno il file con l'ultimo punteggio ottenuto
+    srand(time(NULL));
+    update_file(1 + rand() % 500);
     endwin();
 }
 
+/**
+ * @param win finestra di gioco con parametri sempre uguali
+ * @param highlight elemento selezionato
+ */
 void Menu::check_scelta(WINDOW* win, const int highlight) {
     char selected[30];
     get_voce(selected, highlight);
@@ -161,6 +272,9 @@ void Menu::check_scelta(WINDOW* win, const int highlight) {
     }
 }
 
+/**
+ * @param title titolo della finestra da visualizzare
+ */
 void Menu::display(char title[]) {
     initscr();
     noecho();
