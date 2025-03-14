@@ -1,10 +1,17 @@
+// TODO: endgame menu
 #include "menu.h"
 #include <fstream>
 #include <cstring>
 
 plist lista_livelli = NULL;
 
-/* ----- IMPLEMENTAZIONE FUNZIONI LISTA BIDIREZIONALE ----- */
+/** ----- IMPLEMENTAZIONE FUNZIONI LISTA BIDIREZIONALE ----- */
+
+/**
+ * @param bilista lista bidirezionale dei livelli
+ * @param l livello da aggiungere
+ * @return lista aggiornata
+ */
 plist ordered_insert(plist bilista, const Livello l) {
     // Caso base: lista vuota, crea il primo nodo
     if (bilista == NULL) {
@@ -35,6 +42,11 @@ plist ordered_insert(plist bilista, const Livello l) {
     return new_element; // Nuovo nodo diventa la nuova testa della lista
 }
 
+/**
+ * 
+ * @param bilista lista bidirezionale dei livelli
+ * @return lista aggiornata completa dei livelli
+ */
 plist crea_blista(plist bilista) {
     const int livelli[5] = {1, 2, 3, 4, 5};
     for (int i = 0; i < 5; i++) {
@@ -45,6 +57,12 @@ plist crea_blista(plist bilista) {
 }
 
 /* ----- IMPLEMENTAZIONE FUNZIONI AUSILIARIE ----- */
+
+/**
+ * 
+ * @param win finestra di gioco con parametri sempre uguali
+ * @param file_name nome del file da cui deve andare a leggere la classifica
+ */
 void print_from_file(WINDOW* win, char file_name[]) {
     initscr();
     noecho();
@@ -71,6 +89,12 @@ void print_from_file(WINDOW* win, char file_name[]) {
     file.close();
 }
 
+/**
+ * 
+ * @param win finestra di gioco con parametri sempre uguali
+ * @param list lista con i livelli da selezionare
+ * @param rows numero di righe da stampare (serve per le dimensione della box)
+ */
 void print_from_list(WINDOW* win, plist list, const int rows) {
     plist tmp = list;
     int levels[rows], counter = 0;
@@ -103,6 +127,11 @@ void print_from_list(WINDOW* win, plist list, const int rows) {
 }
 
 /* ----- IMPLEMENTAZIONE CLASSE ----- */
+/**
+ * 
+ * @param v array delle voci del menu
+ * @param n_voci numero delle voci presenti nel menu
+ */
 Menu::Menu(const char* v[], int n_voci) {
     lista_livelli = crea_blista(lista_livelli);
     for (int i = 0; i < n_voci; i++) {
@@ -111,10 +140,19 @@ Menu::Menu(const char* v[], int n_voci) {
     }
 }
 
+/**
+ * 
+ * @param level array nel quale si vuole copiare il NOME del livello
+ * @param index indice dell'array da cui proviene
+ */
 void Menu::get_voce(char level[], const int index) {
     strcpy(level, voci[index]);
 }
 
+/**
+ * 
+ * @param win finestra di gioco con parametri sempre uguali
+ */
 void Menu::scelta_classifica(WINDOW* win) {
     char nome_file[40] = "test.txt";
     print_from_file(win, nome_file);
@@ -144,9 +182,15 @@ void Menu::prova_per_livello(const int livello) {
     refresh();
     wrefresh(menu);
     getch();
+    srand(time(NULL));
     endwin();
 }
 
+/**
+ * 
+ * @param win finestra di gioco con parametri sempre uguali
+ * @param highlight elemento selezionato
+ */
 void Menu::check_scelta(WINDOW* win, const int highlight) {
     char selected[30];
     get_voce(selected, highlight);
@@ -161,6 +205,10 @@ void Menu::check_scelta(WINDOW* win, const int highlight) {
     }
 }
 
+/**
+ * 
+ * @param title titolo della finestra da visualizzare
+ */
 void Menu::display(char title[]) {
     initscr();
     noecho();
