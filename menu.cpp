@@ -1,7 +1,5 @@
 // TODO: endgame menu
 #include "menu.h"
-#include <fstream>
-#include <cstring>
 
 plist lista_livelli = NULL;
 
@@ -65,19 +63,21 @@ void print_from_file(WINDOW* win, char file_name[]) {
     initscr();
     noecho();
     wattroff(win, A_REVERSE); // disattiva stili
-    std::fstream file;
+    std::fstream file; // apertura file da leggere
     file.open(file_name);
     char ch[256];
     int riga = 3;
 
     // l'altezza è: numero righe + 2
-    werase(win);
+    werase(win); // ripulisco finestra
+
+    // stampa della finestra
     box(win, 0, 0);
     mvwprintw(win, 1, 1, "Classifica:");
     refresh();
     wrefresh(win);
 
-    while (file.getline(ch, sizeof(ch))) {
+    while (file.getline(ch, sizeof(ch))) { // scrivo riga per riga della classifica
         mvwprintw(win, riga, 1, "%s", ch);
         refresh();
         wrefresh(win);
@@ -93,6 +93,7 @@ void print_from_file(WINDOW* win, char file_name[]) {
  * @param rows numero di righe da stampare (serve per le dimensione della box)
  */
 void print_from_list(WINDOW* win, plist list, const int rows) {
+    // preparazione della stampa del menu dei livelli
     plist tmp = list;
     int levels[rows], counter = 0;
     for (int i = 0; i < rows; i++) levels[i] = 0;
@@ -114,6 +115,7 @@ void print_from_list(WINDOW* win, plist list, const int rows) {
     refresh();
     wrefresh(win);
 
+    // stampa delle voci del menu
     for (int i = 0; i < rows; i++) {
         mvwprintw(win, riga, 1, "Livello %d", i + 1);
         riga++;
@@ -130,8 +132,8 @@ void print_from_list(WINDOW* win, plist list, const int rows) {
  * @param n_voci numero delle voci presenti nel menu
  */
 Menu::Menu(const char* v[], int n_voci) {
-    lista_livelli = crea_blista(lista_livelli);
-    for (int i = 0; i < n_voci; i++) {
+    lista_livelli = crea_blista(lista_livelli); // crea la lisra dei livelli
+    for (int i = 0; i < n_voci; i++) { // colleziona le voci del menu
         voci[i] = v[i];
         voci_totali++;
     }
@@ -149,11 +151,15 @@ void Menu::get_voce(char level[], const int index) {
  * @param win finestra di gioco con parametri sempre uguali
  */
 void Menu::scelta_classifica(WINDOW* win) {
+    // se si sceglie di aprire la classifica, chiamo la funzione apposita
     char nome_file[40] = "classifica.txt";
     print_from_file(win, nome_file);
 }
 
 /**
+ * Funzioni di appoggio per leggere il contenuto della classifica e, successivamente,
+ * inserire in maniera ordinata il nuovo punteggio.
+ *
  * @param lista lista alla quale aggiungere un elemento
  * @param punteggio totale del punteggio realizzato
  * @return lista aggiornata in modo ordinato
@@ -180,6 +186,8 @@ clist ordered_insert(clist lista, int punteggio) {
 }
 
 /**
+ * Crea la lista leggendo i valori e chiamando la funzione di inserimento ordinato
+ *
  * @param nome_file nome del file della classifica
  * @param lista lista nella quale vogliamo mettere i livelli
  * @return lista aggiornata (completa)
@@ -193,7 +201,7 @@ clist crea_lista(char nome_file[], clist lista) {
         return lista; // Ritorna la lista vuota se il file non esiste
     }
 
-    // riscrivo il file con la lista dei punteggi aggiornata ed ordinata
+    // creo la lista con ogni elemento del file
     int punto;
     while (file_classifica >> punto) {
         lista = ordered_insert(lista, punto);
@@ -203,6 +211,9 @@ clist crea_lista(char nome_file[], clist lista) {
 }
 
 /**
+ * Funzione che viene chiamata dopo aver giocato un livello ed aggiorna
+ * il file con la classifica dei punteggi
+ *
  * @param punteggio punteggio totalizzato durante la paratita
  */
 void Menu::update_file(const int punteggio) {
@@ -225,7 +236,7 @@ void Menu::update_file(const int punteggio) {
 }
 
 void Menu::scelta_partita() {
-    // costruisco il menu dei livelli
+    // costruisco il menu dei livelli se si sceglie di iniziare una nuova partita
     const char* voci[MAX_LIVELLI] = {"Livello 1", "Livello 2", "Livello 3", "Livello 4", "Livello 5"};
     char titolo[50] = "- MENU LIVELLI (seleziona e premi invio) -";
     Menu menu_livelli = Menu(voci, MAX_LIVELLI);
@@ -255,19 +266,22 @@ void Menu::prova_per_livello(const int livello) {
 }
 
 /**
+ * Funzione generica che serve sia per il menu della classifica che per
+ * il menu della scelta dei livelli.
  * @param win finestra di gioco con parametri sempre uguali
  * @param highlight elemento selezionato
  */
 void Menu::check_scelta(WINDOW* win, const int highlight) {
+    // salvo in "selected" la voce scelta da qualsiasi menu
     char selected[30];
     get_voce(selected, highlight);
-    if (strcmp(selected, VOCE_CLASSIFICA) == 0) {
+    if (strcmp(selected, VOCE_CLASSIFICA) == 0) { // visualizzazione classifica
         scelta_classifica(win);
-    } else if (strcmp(selected, VOCE_NUOVA_PARTITA) == 0) {
+    } else if (strcmp(selected, VOCE_NUOVA_PARTITA) == 0) { // nuova partita
         scelta_partita();
     } else if (strcmp(selected, LIVELLO_1) == 0 || strcmp(selected, LIVELLO_2) == 0 ||
         strcmp(selected, LIVELLO_3) == 0 || strcmp(selected, LIVELLO_4) == 0 ||
-            strcmp(selected, LIVELLO_5) == 0) {
+            strcmp(selected, LIVELLO_5) == 0) { // controllo la scelta del livello
         prova_per_livello(highlight + 1);
     }
 }
@@ -278,10 +292,13 @@ void Menu::check_scelta(WINDOW* win, const int highlight) {
 void Menu::display(char title[]) {
     initscr();
     noecho();
+
+    // raccoglie informazioni dello schermo utili nella creazione della finestra
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
 
     // newwin(altezza, larghezza, inizio_Y, inizio_X)
+    // crea una finestra centrata nello schermo
     WINDOW *menu = newwin(10, xMax/2, yMax/4, xMax/4);
     box(menu, 0, 0);
     refresh();
@@ -319,7 +336,7 @@ void Menu::display(char title[]) {
         }
         if (choice == 10) exit = true;
     }
-    check_scelta(menu, highlight);
+    check_scelta(menu, highlight); // controllo la scelta effettuata
     endwin();
 }
 

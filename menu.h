@@ -1,12 +1,29 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include <ncurses/ncurses.h>
-#include "menu.h"
+/**
+ * Controllo su che sistema operativo viene eseguito il programma e,
+ * in base all'esito, cambio l'import della libreria per adattarsi a
+ * MINGW, WSL, UNIX (Linux e MacOS)
+ */
+
+#ifdef _WIN32
+    #ifdef __MINGW32__
+        #include <ncurses/ncurses.h> // Windows con MinGW
+    #else
+        #include <ncurses.h>         // Windows con WSL
+    #endif
+#else
+    #include <ncurses.h>             // Linux e macOS
+#endif
+
+// Librerie necessarie in tutto il programma
 #include "costanti.h"
 #include <iostream>
 #include <fstream>
 #include <ctime>
+#include <cstring>
+
 using namespace std;
 
 
