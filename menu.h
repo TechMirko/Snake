@@ -23,33 +23,9 @@
 #include <fstream>
 #include <ctime>
 #include <cstring>
+#include "Levels.h"
 
 using namespace std;
-
-
-/* ----- DICHIARAZIONI E FUNZIONI PER LA LISTA DEI LIVELLI ----- */
-struct Livello {
-    int numero;
-};
-struct Bilist {
-    Livello liv;
-    Bilist* prec;
-    Bilist* next;
-};
-typedef Bilist* plist;
-
-/**
- * @param bilista lista bidirezionale dei livelli
- * @param l livello da aggiungere
- * @return lista aggiornata
- */
-plist ordered_insert(plist bilista, Livello l);
-
-/**
- * @param bilista lista bidirezionale dei livelli
- * @return lista aggiornata completa dei livelli
- */
-plist crea_blista(plist bilista);
 
 /* ----- DICHIARAZIONE DELLA CLASSE MENU ----- */
 class Menu {
@@ -70,6 +46,7 @@ protected:
     void scelta_partita();
     void prova_per_livello(int livello);
 public:
+    bool classificaOpen, endGame;
     /**
      * @param v array delle voci del menu
      * @param n_voci numero delle voci presenti nel menu
@@ -86,14 +63,15 @@ public:
      * @param index indice dell'array da cui proviene
      */
     void get_voce(char level[], int index);
-
-    /**
-     * @param punteggio punteggio totalizzato durante la paratita
-     */
-    void update_file(int punteggio);
 };
 
 /* ----- DICHIARAZIONE FUNZIONI AUSILIARIE ----- */
+
+/**
+* @param punteggio punteggio totalizzato durante la paratita
+*/
+void update_file(int punteggio);
+
 /**
  * @param w finestra di gioco con parametri sempre uguali
  * @param file_name nome del file da cui deve andare a leggere la classifica
@@ -105,7 +83,7 @@ void print_from_file(WINDOW* w, char file_name[]);
  * @param list lista con i livelli da selezionare
  * @param rows numero di righe da stampare (serve per le dimensione della box)
  */
-void print_from_list(WINDOW* w, plist list, int rows);
+void print_from_list(WINDOW* w, plist list, int rowss);
 
 /* ----- LISTA PER AGGIORNARE FILE ----- */
 struct ClassificaNode {

@@ -3,8 +3,7 @@ HDRS = $(wildcard *.h)
 LIBS = -lncurses
 
 make:
-	g++ $(SRCS) $(LIBS) -o snake
+	g++ $(SRCS) $(LIBS) -o snake_1
 
 clean:
-	del /F /Q *.exe
-
+	rm -f snake_1

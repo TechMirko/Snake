@@ -157,7 +157,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=Snake
+CMAKE_PROJECT_NAME:STATIC=snake_1
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=C:/MinGW/bin/ranlib.exe
@@ -250,6 +250,15 @@ Snake_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
 Snake_SOURCE_DIR:STATIC=C:/Users/mirko/CLionProjects/Snake
+
+//Value Computed by CMake
+snake_1_BINARY_DIR:STATIC=C:/Users/mirko/CLionProjects/Snake/cmake-build-debug-mingw
+
+//Value Computed by CMake
+snake_1_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+snake_1_SOURCE_DIR:STATIC=C:/Users/mirko/CLionProjects/Snake
 
 
 ########################
