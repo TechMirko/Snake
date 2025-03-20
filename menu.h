@@ -30,6 +30,7 @@ using namespace std;
 /* ----- DICHIARAZIONI E FUNZIONI PER LA LISTA DEI LIVELLI ----- */
 struct Livello {
     int numero;
+    int velocita;
 };
 struct Bilist {
     Livello liv;
