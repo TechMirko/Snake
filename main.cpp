@@ -68,9 +68,9 @@ int main(int argc, char *argv[]) {
 
             // ----- PARTE NUOVA CON CLASSE Levels ----- //
             int liv = lvs.get_livello_scelto();
-            // std::cout << "Livello scelto: " << liv << ", bonus = " << 
-            //   lvs.get_bonus(liv) << ", velocita' =  " << lvs.get_velocita(liv)
-            //    << ", valore della mela = " << lvs.get_valore_mela(liv);
+            std::cout << "Livello scelto: " << liv << ", bonus = " << 
+              lvs.get_bonus(liv) << ", velocita' =  " << lvs.get_velocita(liv)
+               << ", valore della mela = " << lvs.get_valore_mela(liv);
             classific=menu_generale.classificaOpen;
             END=menu_generale.endGame;
 

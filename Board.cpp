@@ -96,8 +96,8 @@ void Board::displayBoard(int& punteggio, int speed, int level){        // >>
     box(sfondo, 0, 0);
     box(win, 0, 0);
     //backgroundPrint();
-    printDati(level, punteggio, speed);
-
+    printDati(level, punteggio, speed); // !! <- LEVEL RISULTA 1
+    //std::cout << "In Board.cpp -> level = " << level;
     char ch;
     bool found=false;
     for (int i = 0; i < rows; i++) {

@@ -5,7 +5,7 @@
  * Controllo su che sistema operativo viene eseguito il programma e,
  * in base all'esito, cambio l'import della libreria per adattarsi a
  * MINGW, WSL, UNIX (Linux e MacOS)
- */
+*/
 
 #ifdef _WIN32
     #ifdef __MINGW32__
